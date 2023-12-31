@@ -7,8 +7,9 @@
 # Purpose of this script: Calculate updated response variable -> average effective
 # number of hatchery strays
 
-# Last updated: December 30, 2023
+# Last updated: December 31, 2023
 #-------------------------------------------------------------------------------
+require(tidyverse)
 
 ## Read in data
 surv_1319 <- read.csv("data/stream_survey_data.csv") #2013-2019 stream survey data,
@@ -37,6 +38,14 @@ surv_1319 <- surv_1319 %>% select(-Proportion_sampled)
 #been washed out or otherwise disappeared (that's why there would be fewer total
 #dead compared to previous day)
 fitness_1719 <- surv_1319 %>% filter(Year %in% c("2017", "2018", "2019"))
+
+#Additional note: "fitness" refers to the four fitness streams (which were the
+#only streams sampled 2017-2019). The reader may refer to the following hatchery
+#research project documentation to learn more about fitness streams:
+#https://www.adfg.alaska.gov/static/fishing/PDFs/hatcheries/research/pwssc_2014.pdf.
+#What is important to know here is that fitness streams were sampled more frequently
+#than other streams, for which we will now adjust:
+
 
 #Create "helper" column (the amount to subtract from the dead count)
 fitness_1719$subtract <- rep(NA, length(fitness_1719$AdfgStreamCode))
@@ -122,7 +131,8 @@ surv3 <- rbind.data.frame(remove_fitness_14, fitness_deads_14)
 
 
 #2. Final part! Estimate dead counts for 2008-2011 data ########################
-HW_data <- read.csv("data/2008_2019_HW_Data.csv")
+HW_data <- read.csv("data/2008_2019_HW_Data.csv") #dataset where each record is
+#individual fish; gives hatchery-origin and stream sampling info
 HW_data$Year <- as.factor(HW_data$Year)
 #Filter the 2008-2011 years only
 HW_data_811 <- HW_data %>% filter(Year %in% c("2008", "2009", "2010", "2011"))
@@ -245,7 +255,15 @@ length(surv5[surv5$NumberofSpecimens > surv5$TotalCount,])
 #accurate and set all proportions sampled > 1 equal to 1, as per C. Cunningham's
 #suggestion
 
-surv5$Proportion_sampled[surv5$Proportion_sampled > 1] <- 1
+surv5$Proportion_sampled[surv5$Proportion_sampled > 1] <- 1 #the number of specimnens
+#would only be greater than the dead count on days when there weren't dead fish
+#to sample. Surveyors would take post-spawn fish that were still technically alive
+#and sacrifice them for otoliths. These were counted as "live" fish and would there-
+#fore not be part of the dead count. Proportions > 1 are rounded down to 1 bc
+#this still meets the assumption that surveyors were able to sample all possible
+#hatchery strays that were in the stream that day, instead of only a subset
+
+
 #Final check:
 na_or_below_0 <- function(column){
   sum(is.na(column))
