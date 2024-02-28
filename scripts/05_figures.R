@@ -6,7 +6,7 @@
 
 # Purpose of this script: Create figures for thesis/manuscript
 
-# Last updated: December 30, 2023
+# Last updated: February 27, 2024
 #-------------------------------------------------------------------------------
 require(tidyverse)
 require(ggplot2)
@@ -144,11 +144,41 @@ rm(surv, usa_can, world)
 
 
 
+#2. Number surveys by site and yr ==============================================
+#This is currently figure 2 of the manuscript
+freq <- stray_dat %>%
+  select(Year, StreamName, Number_surveys) %>%
+  mutate(Year = as.factor(Year))
 
-#2. Avg # strays vs distance to nearest release site graph =====================
-#This is currently figure 2 of the manuscript/thesis
+fr <- ggplot(freq, aes(Year, StreamName, color = Number_surveys,
+                       size = Number_surveys)) +
+  geom_point(alpha = 0.75) + theme_bw() +
+  labs(y = "Stream name", color = "Number of
+surveys", size = "Number of
+surveys") +
+  scale_size_continuous(range  = c(0, 3), 
+                        limits = c(0, 32), 
+                        breaks = c(0, 5, 10, 15, 20, 25)) +
+  theme(text = element_text(family= "Times New Roman", size = 5.3),
+        legend.key.size = unit(0.3, "cm"))
+fr
 
-#2.1. Data tailoring ===========================================================
+#Export
+# tiff("figs/survey_freq.tiff", width = 8.5, height = 8.5,
+#      pointsize = 12, units = 'cm',
+#      res = 600)
+# fr
+# dev.off()
+
+
+
+
+
+
+#3. Avg # strays vs distance to nearest release site graph =====================
+#This is currently figure 3 of the manuscript
+
+#3.1. Data tailoring ===========================================================
 stray_dat
 
 plot(Avg_number_strays ~ Dist_nearest_R, data = stray_dat)
@@ -169,8 +199,8 @@ R_type2 <- R_type2[!duplicated(R_type2$StreamName),]
 
 
 
-#2.2. Create figure ============================================================
-fig2 <- ggplot(data = R_type2, aes(x = Dist_nearest_R, y = Avg_number_strays,
+#3.2. Create figure ============================================================
+fig3 <- ggplot(data = R_type2, aes(x = Dist_nearest_R, y = Avg_number_strays,
                                    shape = Release_site_type)) + geom_point(size = 1.8) +
   theme_classic() + scale_shape_manual(values = c(16, 2)) +
   xlab("Distance to the nearest release site (km)") +
@@ -182,7 +212,7 @@ fig2 <- ggplot(data = R_type2, aes(x = Dist_nearest_R, y = Avg_number_strays,
         text=element_text(family="Times New Roman"),
         axis.line = element_line(linewidth = 0.2),
         legend.box.spacing = unit(0, "pt"))
-fig2
+fig3
 #briefly quantitatively compare the average number of hatchery strays within 40km
 #of release for on-site vs remote release sites
 R_type40km <- R_type2[R_type2$Dist_nearest_R <= 40, ]
@@ -192,9 +222,9 @@ t.test(onsite, Remote) #streams near hatchery on-site releases averaged 21.6 str
 #while remote site-proximate streams averaged 71.8 strays. p = 0.21 (not significant)
 
 #Export as high-res figure
-# tiff("figs/fig2.tiff", width = 8.5, height = 7, pointsize = 12, units = 'cm',
+# tiff("figs/fig3.tiff", width = 8.5, height = 7, pointsize = 12, units = 'cm',
 #      res = 600)
-# fig2
+# fig3
 # dev.off()
 
 
@@ -207,8 +237,8 @@ rm(R_type, R_type2)
 
 
 
-#3. Covariate effect plots =====================================================
-#This is currently figure 3 of the manuscript/thesis
+#4. Covariate effect plots =====================================================
+#This is currently figure 4 of the manuscript/thesis
 
 #Create function to determine model effects vector for each covariate:
 create_eff <- function(mod_term){
@@ -224,7 +254,7 @@ create_eff <- function(mod_term){
 ### Now create an individual effect plot for each covariate:
 
 
-#3.1. Conspecific abundance effect plot ========================================
+#4.1. Conspecific abundance effect plot ========================================
 #not included in top model
 # x_Cons <- create_eff(Cons_Abundance)
 # #there's probably a better way to do this, but here is my method for now:
@@ -251,7 +281,7 @@ create_eff <- function(mod_term){
 
 
 
-#3.2. Number of fish released within 40km plot =================================
+#4.2. Number of fish released within 40km plot =================================
 x_WMA <- create_eff(WMA_Releases_by_Yr)
 
 #Un-scale the data
@@ -276,7 +306,7 @@ WMA_plot <- ggplot() +
 WMA_plot
 
 
-#3.3. Coefficient of variation of streamflow plot ==============================
+#4.3. Coefficient of variation of streamflow plot ==============================
 x_CV_flow <- create_eff(CV_flow)
 
 #Un-scale the data
@@ -302,7 +332,7 @@ CVflow_plot #gives you a warning about 3 removed rows; that is because of the
 
 
 
-#3.4. Combine all effects plots into one fig ===================================
+#4.4. Combine all effects plots into one fig ===================================
 all_effects_plot <- ggarrange(WMA_plot, CVflow_plot,
                               ncol = 2, labels = c("a)", "b)"),
                               label.x = -0.01, label.y = 0.99,
@@ -320,7 +350,7 @@ all_effects_plot <- ggarrange(WMA_plot, CVflow_plot,
 
 
 
-#4. CV flow artifact plot ======================================================
+#5. CV flow artifact plot ======================================================
 #Read in df containing flow + Sergeant et al. 2020 variables (created in CV_
 #flow_side_analysis.R)
 flow_plus <- readRDS("output/flow_plus.rds")
