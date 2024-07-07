@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-# Project title: Going beyond the distance: streamflow alters site attractiveness
-# to stray hatchery-origin chum salmon in Southeast Alaska
+# Project title: Streamflow shapes site attractiveness to stray hatchery-origin
+# chum salmon in Southeast Alaska
 
 # Molly K Payne
 
 # Purpose of this script: Exploratory data analysis of response variable and 
 # covariates prior to modeling
 
-# Last updated: December 30, 2023
+# Last updated: July 6, 2024
 #-------------------------------------------------------------------------------
 require(corrgram)
 require(Hmisc)
@@ -71,11 +71,10 @@ COR$P   # Matrix of p-values (which correlations are significant)
 #(-0.36-0.41 correlation)
 print(COR$P <= 0.05) #all of the above mentioned correlations are significant
 
-#I will remove Cons_Density and Pink_Density from the model since they are the 
-#less important of their correlated sets (mostly bc I don't have a lot of con-
-#fidence in the density denominator data (area)). I will also remove Dist_
-#nearest_H and Dist_nearest_R since they are correlated with WMA_Releases_by_Yr 
-#and each other. WMA_Releases_by_Yr will remain because it provides the most info
+#Remove Cons_Density and Pink_Density from the model since they are the  less
+#important of their correlated sets. I will also remove Dist_nearest_H and
+#Dist_nearest_R since they are correlated with WMA_Releases_by_Yr and each other.
+#WMA_Releases_by_Yr will remain because it provides the most info
 stray_dat <- stray_dat[ , -c(9,11,13,14)]
 
 #Send correlation matrix to output folder as a table so you can include in supp-

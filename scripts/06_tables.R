@@ -1,12 +1,12 @@
 #-------------------------------------------------------------------------------
-# Project title: Going beyond the distance: streamflow alters site attractiveness
-# to stray hatchery-origin chum salmon in Southeast Alaska
+# Project title: Streamflow shapes site attractiveness to stray hatchery-origin
+# chum salmon in Southeast Alaska
 
 # Molly K Payne
 
 # Purpose of this script: Create tables for thesis/manuscript
 
-# Last updated: December 30, 2023
+# Last updated: July 6, 2024
 #-------------------------------------------------------------------------------
 require(tidyverse)
 require(tidyr)

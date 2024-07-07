@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-# Project title: Going beyond the distance: streamflow alters site attractiveness
-# to stray hatchery-origin chum salmon in Southeast Alaska
+# Project title: Streamflow shapes site attractiveness to stray hatchery-origin
+# chum salmon in Southeast Alaska
 
 # Molly K Payne
 
 # Purpose of this script: Calculate updated response variable -> average effective
 # number of hatchery strays
 
-# Last updated: December 31, 2023
+# Last updated: July 6, 2024
 #-------------------------------------------------------------------------------
 require(tidyverse)
 

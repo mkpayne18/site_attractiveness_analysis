@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
-# Project title: Going beyond the distance: streamflow alters site attractiveness
-# to stray hatchery-origin chum salmon in Southeast Alaska
+# Project title: Streamflow shapes site attractiveness to stray hatchery-origin
+# chum salmon in Southeast Alaska
 
 # Molly K Payne
 
@@ -8,7 +8,7 @@
 # binomial error distribution to predict the average (effective) number of hatch-
 # ery strays in a stream and year
 
-# Last updated: December 30, 2023
+# Last updated: July 6, 2024
 #-------------------------------------------------------------------------------
 require(lme4)
 require(MuMIn)
@@ -154,7 +154,7 @@ resid_cov(NB_mod2)
 par(mfrow=c(1,1))
 
 #Check variance inflation factors
-car::vif(NB_mod2) #all are < 1.6 (cause for concern only if > 2)
+car::vif(NB_mod2) #all are < 1.7 (cause for concern only if > 2)
 
 
 

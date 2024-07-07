@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
-# Project title: Going beyond the distance: streamflow alters site attractiveness
-# to stray hatchery-origin chum salmon in Southeast Alaska
+# Project title: Streamflow shapes site attractiveness to stray hatchery-origin
+# chum salmon in Southeast Alaska
 
 # Molly K Payne
 
 # Purpose of this script: Check for other plausible relationships between number
 # of hatchery strays and watershed variables beyond CV_flow
 
-# Last updated: December 30, 2023
+# Last updated: July 6, 2024
 #-------------------------------------------------------------------------------
 
 #Contains all watershed data in addition to CV_flow:
@@ -18,7 +18,7 @@ CSergeant_OG_dat$Watershed_ID2 <- as.character(CSergeant_OG_dat$Watershed_ID2)
 #Contains flow data only. Specifically (its purpose here) is that it contains 
 #your chapter 1 study streams and their associated watershed ID so that you can
 #link your study streams to the additional data in CSergeant_OG_dat
-Flow_dat <- read_csv("data/Flow_data.csv")
+Flow_dat <- read.csv("data/Flow_data.csv")
 
 
 ### Some streams have 2 watersheds assigned to them, so the CSergeant_OG_dat data
