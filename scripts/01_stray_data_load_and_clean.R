@@ -62,7 +62,7 @@ colnames(stray_dat)[8] <- "Number_surveys"
 #created in response_var_update.R:
 
 #First read in the new response variable data object containing the effective
-#number of strays (created in dead_counts_analysis.R):
+#number of strays (created in response_var_update.R):
 new_response_var <- readRDS("output/new_response_var.rds")
 colnames(stray_dat)[8] <- "old_Number_surveys"
 colnames(stray_dat)[9] <- "old_Avg_strays"
