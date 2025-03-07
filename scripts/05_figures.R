@@ -55,9 +55,9 @@ data_for_map <- left_join(data_for_map, surv, by = "StreamName")
 #Include hatchery locations (on map, not in dataframe)
 Hatchery_Locations <- read.csv("data/hatchery_location_data.csv")
 
-#remove Wally Noerenberg and Nitinat River hatcheries
-Hatchery_Locations <- Hatchery_Locations %>% slice(1:12) %>%
-  mutate(H_llocs = "Hatchery locations")
+#remove Wally Noerenberg and Nitinat River hatcheries; they are not in SEAK
+Hatchery_Locations <- Hatchery_Locations %>% drop_na(type) %>%
+  mutate(H_llocs = "Hatchery/release locations")
 
 
 
@@ -94,15 +94,24 @@ fig1 <- ggmap(myMap) + geom_point(aes(x = Longitude, y = Latitude,
            y.max = 54.95, dist = 50, dist_unit = "km",
            transform = T, height = 0.4, st.dist = 0.6,
            st.size = 4)
-
 fig1
 
 
 #Add in the hatcheries:
 fig1a <- fig1 + geom_point(data = Hatchery_Locations, aes(x = Longitude,
-                                                          y = Latitude, col=H_llocs),
-                           shape = 24, size = 4, fill = "darkred") + labs(col = "") +
-  scale_color_manual(values = "black") 
+                                                          y = Latitude, col=type,
+                                                          shape = type), size = 4) +
+  labs(col = "") +
+   scale_color_manual(name = "",
+                      labels = c("Hatchery",
+                                 "Hatchery/release site",
+                                 "Release site"),
+                      values = c("purple", "green", "blue")) +
+  scale_shape_manual(name = "",
+                     labels = c("Hatchery",
+                                "Hatchery/release site",
+                                "Release site"),
+                     values = c(2,2,1))
 fig1a
 
 
@@ -118,7 +127,7 @@ alaska <- ggplot(data = usa_can) +
                                                        ymin = 700000,
                                                        ymax = 1270000),
                                                    fill = "transparent",
-                                                   color = "black", size = 1.5) +
+                                                   color = "black", linewidth = 1.5) +
   theme(plot.margin=grid::unit(c(0,0,0,0), "mm"),
         panel.border = element_rect(colour = "black", fill=NA)) #this last
 #plot.margin part removes the white margin that shows up around the plot when you 
@@ -421,9 +430,9 @@ comb_flow <- ggarrange(a, b, ncol = 1, labels = c("a)", "b)"),
 comb_flow
 
 #Export
-tiff('figs/CVflow_side_plot.tiff', width = 8.5, height = 11, pointsize = 12,
-     units = 'cm', res = 600)
-comb_flow
-dev.off()
+# tiff('figs/CVflow_side_plot.tiff', width = 8.5, height = 11, pointsize = 12,
+#      units = 'cm', res = 600)
+# comb_flow
+# dev.off()
 
 
