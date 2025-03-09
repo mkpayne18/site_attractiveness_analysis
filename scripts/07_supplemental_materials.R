@@ -158,24 +158,24 @@ deads_by_yr <- new %>% group_by(StreamName, Year) %>%
   summarise(Total_dead = sum(DeadCount),
             Number_H_fish = sum(NumberStrays),
             Total_fish_sampled = sum(NumberofSpecimens))
-tables5 <- left_join(new_response_var, deads_by_yr, by = c("StreamName", "Year"))
+s1tables1 <- left_join(new_response_var, deads_by_yr, by = c("StreamName", "Year"))
 
 sapply(deads_by_yr, function(x) sum(is.na(x)))
 
-tables5 <- tables5[,c(2,1,8,7,6,3:5)]
-colnames(tables5)[2] <- "Stream name"      
-colnames(tables5)[3] <- "Total fish sampled"
-colnames(tables5)[4] <- "Number of hatchery fish"
-colnames(tables5)[5] <- "Dead count"
-colnames(tables5)[6] <- "Effective number of hatchery strays"
-colnames(tables5)[7] <- "Number of surveys"
-colnames(tables5)[8] <- "Attractiveness index (average effective number of strays)"
+s1tables1 <- s1tables1[,c(2,1,8,7,6,3:5)]
+colnames(s1tables1)[2] <- "Stream name"      
+colnames(s1tables1)[3] <- "Total fish sampled"
+colnames(s1tables1)[4] <- "Number of hatchery fish"
+colnames(s1tables1)[5] <- "Dead count"
+colnames(s1tables1)[6] <- "Effective number of hatchery strays"
+colnames(s1tables1)[7] <- "Number of surveys"
+colnames(s1tables1)[8] <- "Attractiveness index (average effective number of strays)"
 
 #Reduce the number of digits
-tables5$`Effective number of hatchery strays` <-
-  round(tables5$`Effective number of hatchery strays`, 1)
-tables5$`Attractiveness index (average effective number of strays)` <-
-  round(tables5$`Attractiveness index (average effective number of strays)`, 1)
+s1tables1$`Effective number of hatchery strays` <-
+  round(s1tables1$`Effective number of hatchery strays`, 1)
+s1tables1$`Attractiveness index (average effective number of strays)` <-
+  round(s1tables1$`Attractiveness index (average effective number of strays)`, 1)
 
 #NOTE that the effective number of strays col does not always = number of
 #hatchery fish / proportion sampled (where proportion sampled = total fish
@@ -185,7 +185,7 @@ tables5$`Attractiveness index (average effective number of strays)` <-
 #slightly greater than would be expected. See docs/effective_number_strays_note.
 #Rmd for more info
 
-# write.csv(tables5, "stream_year_info.csv", row.names = F)
+# write.csv(s1tables1, "stream_year_info.csv", row.names = F)
 
 
 
