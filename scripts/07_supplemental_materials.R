@@ -148,12 +148,12 @@ pred_obs_supp <- pred_obs_supp[,c(2,14,15,3:6,8)]
 
 
 #3. Individual stream-year info ================================================
-new_response_var <- readRDS("output/new_response_var.rds") #created in dead_
-#counts_analysis.R, gives the total effective # of strays, the # of surveys,
+new_response_var <- readRDS("output/new_response_var.rds") #created in new_response
+#_var.R, gives the total effective # of strays, the # of surveys,
 #and the average # of strays calculated from both of those, which I used as the
 #updated model response variable as of May 2022
-new <- readRDS("output/new_response_survey_dat.rds")  #also from dead_counts_
-#analysis.R, contains the dead counts used to calculate new_response_var
+new <- readRDS("output/new_response_survey_dat.rds")  #also from new_response_
+#var.R, contains the dead counts used to calculate new_response_var
 deads_by_yr <- new %>% group_by(StreamName, Year) %>%
   summarise(Total_dead = sum(DeadCount),
             Number_H_fish = sum(NumberStrays),
