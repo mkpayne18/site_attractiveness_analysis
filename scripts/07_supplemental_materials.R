@@ -6,7 +6,7 @@
 
 # Purpose of this script: Create supplemental tables and figs for thesis/manuscript
 
-# Last updated: July 6, 2024
+# Last updated: March 9, 2025
 #-------------------------------------------------------------------------------
 library(ggplot2)
 library(ggpubr)
@@ -185,7 +185,7 @@ tables5$`Attractiveness index (average effective number of strays)` <-
 #slightly greater than would be expected. See docs/effective_number_strays_note.
 #Rmd for more info
 
-# write.csv(tables5, "stream_year_info.csv")
+# write.csv(tables5, "stream_year_info.csv", row.names = F)
 
 
 
